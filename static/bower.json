@@ -1,0 +1,22 @@
+{
+  "name": "static",
+  "authors": [
+    "scripterz <office@scripterz.in>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jssocials": "^1.5.0",
+    "bootstrap-social": "^5.1.1"
+  }
+}

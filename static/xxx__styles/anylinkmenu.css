@@ -1,0 +1,10 @@
+.selectedanchor{background:#eee;color:#000 !important}.anylinkmenu{position:absolute;left:0;top:0;visibility:hidden;border:1px
+solid #ccc;border-bottom-width:0;font:normal 13px "Trebuchet MS", Verdana;line-height:18px;z-index:100;background:#886910;width:200px}.anylinkmenu
+ul{margin:0;padding:0;list-style-type:none}.anylinkmenu ul li
+a{width:100%;display:block;font-size:11px;text-indent:3px;border-bottom:1px solid #f6b906;padding:4px
+0;text-decoration:none;font-weight:normal;text-indent:5px;color:#fff}.anylinkmenu a:hover{background:#AA9246;color:#fff}.anylinkmenucols{position:absolute;width:350px;left:0;top:0;visibility:hidden;border:1px
+solid black;padding:10px;font:normal 12px;z-index:100;background:#E9E9E9}.anylinkmenucols
+li{padding-bottom:4px}.anylinkmenucols
+.column{float:left;padding:3px
+8px;margin-right:5px;background:#E0E0E0}.anylinkmenucols .column
+ul{margin:0;padding:0;list-style-type:none}.anylinkshadow{display:none}

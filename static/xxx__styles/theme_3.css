@@ -1,0 +1,4 @@
+body{background-image:url(../images/patterns/purple.jpg)}#banner{background-image:url(../images/banners/banner01.jpg)}#main_menu{background-color:#3F0359;background-image:url("../images/menu_bg_thm3.jpg")}#main_menu
+li{background-image:none}#main_menu li:hover{background-color:#490566 !important}#main_menu a:hover{background-color:#490566;background-image:none}#footer{background-color:#38024f}.sf-menu ul
+li{background-color:#3F0359 !important}.sf-menu ul li, .sf-menu ul li
+li{border-color:#390351 !important;border-top:none}

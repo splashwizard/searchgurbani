@@ -1,0 +1,1 @@
+[14-Jan-2012 16:10:00] PHP Fatal error:  Using $this when not in object context in /home/searchgu/public_html/application/views/pages/index.php on line 5

@@ -1,0 +1,413 @@
+<?php
+
+global $SG_Preferences, $SG_Languages;
+
+
+extract($SG_Preferences);
+
+$check = " checked='checked'";
+
+
+$back_button = '';
+
+if ($this->session->flashdata('referer') != '') {
+
+    $back_button = '
+
+	<input type="hidden" value="' . $this->session->flashdata('referer') . '" name="referer">
+
+	<input name="Back" type="button" class="submit_btn" value="Go Back" id="Back" onClick="document.location.href=\'' . $this->session->flashdata('referer') . '\'" />';
+
+} elseif (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] != '') {
+
+    $back_button = '
+
+	<input type="hidden" value="' . $_SERVER['HTTP_REFERER'] . '" name="referer">
+
+	<input name="Back" type="button" class="submit_btn" value="Go Back" id="Back" onClick="document.location.href=\'' . $_SERVER['HTTP_REFERER'] . '\'" />';
+
+}
+
+?>
+
+<!--start-->
+
+
+<h2><strong>Gurbani Search Preferences</strong></h2>
+
+<p><em>Please check the languages and attributes you want to view while browsing the Sri Guru Granth Sahib Ji , Amrit
+        Keertan Gutka ,Vaaran Bhai Gurdas , Kabit Bhai Gurdas and Sri Dasam Granth Sahib </em></p>
+
+<p><?php echo $back_button; ?></p>
+
+<?php
+
+if ($this->session->flashdata('response') != '') {
+
+    echo $this->session->flashdata('response');
+
+}
+
+?>
+
+<form name="frmPreferences" id="frmPreferences" action="<?php echo site_url('preferences/save'); ?>" method="post">
+
+    <div id="preference_table">
+
+        <h4>Select how would you like the text to be displayed:</h4>
+
+        <div class="content">
+
+            <label>
+
+                <input type="radio" value="line_by_line" name="text_type"
+                       id="text_type_1" <?php echo $text_type == "line_by_line" ? $check : ''; ?> />
+
+                Display Line by Line</label>
+
+            <label>
+
+                <input type="radio" value="para_by_para" name="text_type"
+                       id="text_type_2" <?php echo $text_type == "para_by_para" ? $check : ''; ?>/>
+
+                Display by Paragraphs</label>
+
+        </div>
+
+        <h4>Select the Language(s)/ Translation(s) / Description(s) that you would like displayed: </h4>
+
+        <div class="content">
+
+
+            <?php
+
+            $pref = array("common" => array(), "ggs" => array(), "ak" => array(), "bgv" => array(), "dg" => array(), "ks" => array());
+
+
+            foreach ($SG_Languages as $language_key => $language_data) {
+
+                // Adding for common languages
+
+                if (in_array("ggs", $language_data['tables']) and
+
+                    in_array("ak", $language_data['tables']) and
+
+                    in_array("bgv", $language_data['tables']) and
+
+                    in_array("dg", $language_data['tables']) and
+
+                    $language_data['active'] == true
+                ) {
+
+                    $pref['common']['title'] = 'Common Languages for Guru Granth Shahib, Amrit Keertan, Bhai Gurdas Vaaran and Dasam Granth Sahib';
+
+                    $pref['common']['langs'][$language_key] = $language_data;
+
+                } else {
+
+                    if (in_array("ggs", $language_data['tables']) and $language_data['active'] == true) {
+
+                        $pref['ggs']['title'] = 'Additional Translations available on Guru Granth Shahib';
+
+                        $pref['ggs']['langs'][$language_key] = $language_data;
+
+                    }
+
+                    if (in_array("ak", $language_data['tables']) and $language_data['active'] == true) {
+
+                        $pref['ak']['title'] = 'Additional Translations available on Amrit Keertan';
+
+                        $pref['ak']['langs'][$language_key] = $language_data;
+
+                    }
+
+                    if (in_array("bgv", $language_data['tables']) and $language_data['active'] == true) {
+
+                        $pref['bgv']['title'] = 'Additional Translations available on Bhai Gurdas Vaaran';
+
+                        $pref['bgv']['langs'][$language_key] = $language_data;
+
+                    }
+
+                    if (in_array("dg", $language_data['tables']) and $language_data['active'] == true) {
+
+                        $pref['dg']['title'] = 'Additional Translations available on Dasam Granth Sahib';
+
+                        $pref['dg']['langs'][$language_key] = $language_data;
+
+                    }
+
+                    if (in_array("ks", $language_data['tables']) and $language_data['active'] == true) {
+
+                        $pref['ks']['title'] = 'Additional Translations available on Kabbit Savaiye';
+
+                        $pref['ks']['langs'][$language_key] = $language_data;
+
+                    }
+
+                }
+
+            }
+
+
+            foreach ($pref as $pref_data) {
+
+                if (isset($pref_data['langs']) and count($pref_data['langs']) > 0) {
+
+                    echo '<p><strong>' . $pref_data['title'] . ':</strong></p><p>';
+
+                    foreach ($pref_data['langs'] as $language_key => $language_data) {
+
+                        echo '
+
+<label>
+
+<input type="checkbox" value="yes" name="' . $language_key . '" ' . ($$language_key == "yes" ? $check : '') . '>
+
+' . $language_data['lang_name'] . '
+
+</label>
+
+			';
+
+                    }
+
+                    echo '</p>';
+
+                }
+
+            }
+
+            ?>
+
+
+            <h4>Select to view instant Gurmukhi words meanings. Passing the mouseover Gurmukhi word will show the
+                meaning, on click will open a popup window with English and Gurmukhi </h4>
+
+            <div class="content">
+
+                <p><label>
+
+                        <input type="checkbox" value="yes"
+                               name="mouse_over_gurmukhi_dictionary" <?php echo $mouse_over_gurmukhi_dictionary == "yes" ? $check : ''; ?>>
+                        Mouseover Gurmukhi Dictionary </label></p>
+
+            </div>
+
+            <h4>Select these Options to show Page line #, Author, Raag: </h4>
+
+            <div class="content">
+
+                <p><label><input type="checkbox" value="yes"
+                                 name="show_attributes" <?php echo $show_attributes == "yes" ? $check : ''; ?>>
+
+                        Show Attributes (Page line #, Author, Raag)</label></p>
+
+            </div>
+
+            <h4>Select this option to enable sharing scripture lines to social networking websites: </h4>
+
+            <div class="content">
+
+                <p><label><input type="checkbox" value="yes"
+                                 name="allow_share_lines" <?php echo $allow_share_lines == "yes" ? $check : ''; ?>>
+
+                        Enable sharing to social networking websites</label></p>
+
+            </div>
+
+            <h4>Choose The Font: </h4>
+
+            <div class="content">
+
+                Gurmukhi:
+
+
+                <select name="language" class="form-select" id="edit-months">
+
+                    <option
+                        value="arial"<?php if (isset($_COOKIE['csstypeG']) && $_COOKIE['csstypeG'] == 'AnmolUniBani') { ?> selected="selected" <?php } ?>>
+                        Default
+                    </option>
+
+
+                    <option
+                        value="RaajaaMediumMedium" <?php if (isset($_COOKIE['csstypeG']) && $_COOKIE['csstypeG'] == 'RaajaaMediumMedium') { ?> selected="selected" <?php } ?>>
+                        Raajaa
+                    </option>
+
+                    <option
+                        value="RaajaaBoldBold" <?php if (isset($_COOKIE['csstypeG']) && $_COOKIE['csstypeG'] == 'RaajaaBoldBold') { ?> selected="selected" <?php } ?> >
+                        Raajaa Bold
+                    </option>
+
+                    <option
+                        value="RaajBold" <?php if (isset($_COOKIE['csstypeG']) && $_COOKIE['csstypeG'] == 'RaajBold') { ?> selected="selected" <?php } ?>>
+                        Raaj
+                    </option>
+
+                    <option
+                        value="AdhiapakMarkerMedium" <?php if (isset($_COOKIE['csstypeG']) && $_COOKIE['csstypeG'] == 'AdhiapakMarkerMedium') { ?> selected="selected" <?php } ?>>
+                        Adhiapak
+                    </option>
+
+                    <option
+                        value="PrabhkiRegular" <?php if (isset($_COOKIE['csstypeG']) && $_COOKIE['csstypeG'] == 'PrabhkiRegular') { ?> selected="selected" <?php } ?> >
+                        Prabhki
+                    </option>
+
+                    <option
+                        value="KarmicSanjMedium" <?php if (isset($_COOKIE['csstypeG']) && $_COOKIE['csstypeG'] == 'KarmicSanjMedium') { ?> selected="selected" <?php } ?>>
+                        Karmic sanj
+                    </option>
+
+                </select>
+
+                Phonetic English:
+
+                <select name="PhonEnglish" class="form-select" id="edit-months">
+
+                    <option value="arial">Default</option>
+
+                    <option
+                        value="Puritan20Italic" <?php if (isset($_COOKIE['PhonEnglish']) && $_COOKIE['PhonEnglish'] == 'Puritan20Italic') { ?> selected="selected" <?php } ?> >
+                        Puritan
+                    </option>
+
+                    <option
+                        value="AndikaBasicRegular" <?php if (isset($_COOKIE['PhonEnglish']) && $_COOKIE['PhonEnglish'] == 'AndikaBasicRegular') { ?> selected="selected" <?php } ?>>
+                        Andika
+                    </option>
+
+                    <option
+                        value="ArchitectsDaughterRegular" <?php if (isset($_COOKIE['PhonEnglish']) && $_COOKIE['PhonEnglish'] == 'ArchitectsDaughterRegular') { ?> selected="selected" <?php } ?>>
+                        Architect
+                    </option>
+
+                    <option
+                        value="QuattrocentoRomanRegular" <?php if (isset($_COOKIE['PhonEnglish']) && $_COOKIE['PhonEnglish'] == 'QuattrocentoRomanRegular') { ?> selected="selected" <?php } ?>>
+                        Quattrocento
+                    </option>
+
+                    <option
+                        value="DroidSansRegular" <?php if (isset($_COOKIE['EngTrans']) && $_COOKIE['EngTrans'] == 'DroidSansRegular') { ?> selected="selected" <?php } ?>>
+                        Droid Sans
+                    </option>
+
+                    <option
+                        value="DroidSerifBold" <?php if (isset($_COOKIE['PhonEnglish']) && $_COOKIE['PhonEnglish'] == 'DroidSerifBold') { ?> selected="selected" <?php } ?>>
+                        Droid Bold
+                    </option>
+
+                </select>
+
+
+                Hindi:
+
+                <select name="HinTrans" class="form-select" id="edit-months">
+
+                    <option value="arial">Default</option>
+
+                    <option
+                        value="JaipurRegular" <?php if (isset($_COOKIE['HinTrans']) && $_COOKIE['HinTrans'] == 'JaipurRegular') { ?> selected="selected" <?php } ?>>
+                        Jaipur Regular
+                    </option>
+
+                    <option
+                        value="Gurumaa150Bold" <?php if (isset($_COOKIE['HinTrans']) && $_COOKIE['HinTrans'] == 'Gurumaa150Bold') { ?> selected="selected" <?php } ?>>
+                        Gurumaa Regular
+                    </option>
+
+                    <option
+                        value="RaghindiRegular" <?php if (isset($_COOKIE['HinTrans']) && $_COOKIE['HinTrans'] == 'RaghindiRegular') { ?> selected="selected" <?php } ?>>
+                        Raghu Regular
+                    </option>
+
+                    <option
+                        value="gargiMedium" <?php if (isset($_COOKIE['HinTrans']) && $_COOKIE['HinTrans'] == 'gargiMedium') { ?> selected="selected" <?php } ?>>
+                        Gargi Medium
+                    </option>
+
+                    <option
+                        value="CDACGISTYogeshNormal" <?php if (isset($_COOKIE['HinTrans']) && $_COOKIE['HinTrans'] == 'CDACGISTYogeshNormal') { ?> selected="selected" <?php } ?>>
+                        Yogesh Normal
+                    </option>
+
+                    <option
+                        value="CDACGISTSurekhNormal" <?php if (isset($_COOKIE['HinTrans']) && $_COOKIE['HinTrans'] == 'CDACGISTSurekhNormal') { ?> selected="selected" <?php } ?>>
+                        Surekh Normal
+                    </option>
+
+                </select>
+
+                English Translation:
+
+                <select name="EngTrans" class="form-select" id="edit-months">
+
+                    <option value="arial">Default</option>
+
+                    <option
+                        value="Puritan20Italic" <?php if (isset($_COOKIE['EngTrans']) && $_COOKIE['EngTrans'] == 'Puritan20Italic') { ?> selected="selected" <?php } ?>>
+                        Puritan
+                    </option>
+
+                    <option
+                        value="AndikaBasicRegular" <?php if (isset($_COOKIE['EngTrans']) && $_COOKIE['EngTrans'] == 'AndikaBasicRegular') { ?> selected="selected" <?php } ?>>
+                        Andika
+                    </option>
+
+                    <option
+                        value="ArchitectsDaughterRegular" <?php if (isset($_COOKIE['EngTrans']) && $_COOKIE['EngTrans'] == 'ArchitectsDaughterRegular') { ?> selected="selected" <?php } ?>>
+                        Architect
+                    </option>
+
+                    <option
+                        value="QuattrocentoRomanRegular" <?php if (isset($_COOKIE['EngTrans']) && $_COOKIE['EngTrans'] == 'QuattrocentoRomanRegular') { ?> selected="selected" <?php } ?>>
+                        Quattrocento
+                    </option>
+
+                    <option
+                        value="DroidSansRegular" <?php if (isset($_COOKIE['EngTrans']) && $_COOKIE['EngTrans'] == 'DroidSansRegular') { ?> selected="selected" <?php } ?>>
+                        Droid Sans
+                    </option>
+
+                    <option
+                        value="DroidSerifBold" <?php if (isset($_COOKIE['PhonEnglish']) && $_COOKIE['PhonEnglish'] == 'DroidSerifBold') { ?> selected="selected" <?php } ?>>
+                        Droid Bold
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div id='pref_buttons'>
+
+            <?php
+
+            echo $back_button;
+
+            ?>
+
+            <input name="Reset" type="button" class="submit_btn" value="Reset to Defaults" onClick="reset_defaults()"/>
+
+            <input name="Submit" type="submit" class="submit_btn" value="Submit Changes"/>
+
+        </div>
+
+</form>
+
+
+<script type="text/javascript">
+
+    function reset_defaults() {
+        document.getElementById('frmPreferences').action = '<?php echo site_url('preferences/reset-defaults'); ?>';
+
+        document.getElementById('frmPreferences').submit();
+
+    }
+
+</script>
+
+<!--end-->

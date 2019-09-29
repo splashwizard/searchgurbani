@@ -1,0 +1,54 @@
+body.purple,body.mehendi,body.dpurple,body.gmehendi,body.darkblue,body.fuscia{
+    background: none
+}
+
+.youtube-dispay, .abs-top, .abs-bottom, .abs-left, .abs-right, header, footer, .copyright, .ang-paginate, .utility-bar1, #main-menu, .shabad_view, .ang_view, .verse_view {
+    display: none
+}
+
+.border_vertical_left, .border_vertical_right, #wrapper, .main_content {
+    background: none;
+    padding: 0px
+}
+
+#header, #main_menu, #banner, #footer, .border_horizondal, .border_horizondal, #footer_copy, .goto_form, .navigation_links, .utility_buttons, .share_icons {
+    display: none
+}
+
+#container {
+    width: 100%
+}
+
+.row1, .row-1, .sharediv {
+    background: none
+}
+
+.line {
+    border-bottom: 1px solid #999
+}
+
+.displaying_page_info {
+    font-weight: bold
+}
+
+h2 {
+    text-align: center
+}
+
+.show_while_print {
+    display: inline
+}
+
+.hide_while_print {
+    display: none
+}
+
+.col_33_percent {
+    width: auto
+}
+
+#audio_player {
+    display: none
+}
+
+

@@ -1,0 +1,17 @@
+User-agent: *
+Disallow: /system/
+Disallow: /scripts/
+Disallow: /styles/
+Disallow: /beta/
+Disallow: /ci/
+Disallow: /audio/
+Disallow: /cgi-bin/
+Disallow: /fonts/
+Disallow: /downloads/
+Disallow: /flood/
+Disallow: /pdf_view/
+Disallow: /print_view/
+Disallow: /pdf_view
+
+
+Sitemap: https://www.searchgurbani.com/sitemap-archive/new/index.xml

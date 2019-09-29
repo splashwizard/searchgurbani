@@ -1,0 +1,14 @@
+{
+    "name": "Search Gurbani",
+    "require": {
+        "hybridauth/hybridauth": "^2.9",
+        "drewm/mailchimp-api": "^2.4",
+        "mrclay/minify": "~3.0.0"
+    },
+    "authors": [
+        {
+            "name": "SCRIPTERZ",
+            "email": "info@scripterz.in"
+        }
+    ]
+}
